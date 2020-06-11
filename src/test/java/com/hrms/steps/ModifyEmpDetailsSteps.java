@@ -57,7 +57,9 @@ public class ModifyEmpDetailsSteps extends CommonMethods {
 			String[] arr = it.next().split("-");
 			List<String> data = new ArrayList<>();
 			for (String a : arr) {
-				data.add(a);
+				String noLeadingZero = a.replaceAll("^0+(?!$)", "");
+				data.add(noLeadingZero);
+				System.out.println(noLeadingZero);
 			}
 			Iterator<String> iter = data.iterator();
 			while (iter.hasNext()) {
@@ -73,7 +75,8 @@ public class ModifyEmpDetailsSteps extends CommonMethods {
 			String[] arr2 = it.next().split("-");
 			List<String> data2 = new ArrayList<>();
 			for (String a : arr2) {
-				data2.add(a);
+				String noLeadingZero = a.replaceAll("^0+(?!$)", "");
+				data2.add(noLeadingZero);
 			}
 			Iterator<String> iterat = data2.iterator();
 			while (iterat.hasNext()) {
@@ -99,12 +102,6 @@ public class ModifyEmpDetailsSteps extends CommonMethods {
 	@Then("checks all data modified")
 	public void checks_all_data_modified() {
 		List<WebElement> actualListWeb =  driver.findElements(By.cssSelector(".editable"));
-//		for(int i=0; i<actualListWeb.size(); i++) {
-//			String value = actualListWeb.get(i).getAttribute("value");
-//			if(value.equals("") || value.equals("1") || value.equals("Alfredo") || value.equals("Pitbullterierro") || value.equals(AddEmployeeSteps.expextedID) || value.equals("2") ) {
-//				actualListWeb.remove(i);
-//			}
-		
 		actualListWeb.remove(0);
 		actualListWeb.remove(0);
 		actualListWeb.remove(0);
@@ -115,8 +112,6 @@ public class ModifyEmpDetailsSteps extends CommonMethods {
 		actualListWeb.remove(5);
 		actualListWeb.remove(7);
 		
-
-		
 		List<String>actualList = new ArrayList<>();
 		for(WebElement el: actualListWeb) {
 			actualList.add(el.getAttribute("value"));
@@ -124,15 +119,14 @@ public class ModifyEmpDetailsSteps extends CommonMethods {
 		List<String>expectedList = new ArrayList<>(listData);
 		expectedList.remove(4);
 		expectedList.remove(5);
-		System.out.println("actual --> "+actualList);
-		System.out.println(actualList.size());
-		System.out.println("expected --> "+expectedList);
 		Assert.assertEquals("Employee Details are NOT Madified", expectedList, actualList);
 		
 		Select select = new Select(driver.findElement(By.id("personal_cmbNation")));
 		System.out.println("-------------------------------------");
 		System.out.println(select.getAllSelectedOptions());
 		System.out.println("-------------------------------------");
+		
+		
 	}
 
 	@When("user enters Employee Details data from {string}")
