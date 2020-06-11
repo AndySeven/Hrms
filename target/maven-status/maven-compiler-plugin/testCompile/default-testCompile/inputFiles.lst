@@ -2,6 +2,7 @@
 /Users/robespierre/eclipse-workspace/Hrms/src/test/java/com/hrms/pages/PersonalDetailsPageElements.java
 /Users/robespierre/eclipse-workspace/Hrms/src/test/java/com/hrms/utils/ConfigsReader.java
 /Users/robespierre/eclipse-workspace/Hrms/src/test/java/com/hrms/utils/ExcelUtility.java
+/Users/robespierre/eclipse-workspace/Hrms/src/test/java/com/hrms/runners/TestRunner.java
 /Users/robespierre/eclipse-workspace/Hrms/src/test/java/com/hrms/runners/SmokeRunner.java
 /Users/robespierre/eclipse-workspace/Hrms/src/test/java/com/hrms/pages/ViewEmployeePageElements.java
 /Users/robespierre/eclipse-workspace/Hrms/src/test/java/com/hrms/pages/LoginPageElements.java

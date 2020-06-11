@@ -1,3 +1,4 @@
+@Progress
 Feature: Personal Details
 
   Background: 
@@ -14,14 +15,16 @@ Feature: Personal Details
     And user clicks on button edit
 
   Scenario: As Admin user modifies personal details using dataTable
-    When user enters Employee Details data from dataTable
+    And SERVICE STEP getting data from dataTable
       | 888-888-888 | 2019-Apr-18 | 555-23-5555 | 123-127 | 1 | Married | Sri Lankan | 1990-Aug-02 | AlfredoNick | No |
+    When user enters Employee Details data
     And user checks smoker singlr check box
     And user clicks save button
-    Then checks all data modified
+    Then checks all data modified "Sri Lankan"
 
-  #Scenario: As Admin user modifies personal details using Excel
-    #When user enters Employee Details data from "PersonalDetails"
-    #And user checks smoker singlr check box
-    #And user clicks save button
-    #Then checks all data modified
+  Scenario: As Admin user modifies personal details using Excel
+    And SERVICE STEP geting data from excel sheet "PersonalDetails"
+    When user enters Employee Details data
+    And user checks smoker singlr check box
+    And user clicks save button
+    Then checks all data modified "Sri Lankan"

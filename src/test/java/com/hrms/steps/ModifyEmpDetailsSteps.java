@@ -1,31 +1,36 @@
 package com.hrms.steps;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.Map;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import com.hrms.utils.CommonMethods;
+import com.hrms.utils.Constants;
+import com.hrms.utils.ExcelUtility;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class ModifyEmpDetailsSteps extends CommonMethods {
-	List<String> listData;
+	List<String> listData = new ArrayList<>();
+	List<Map<String, String>> empDetails;
+
 	@When("user clicks on Employee id and")
 	public void user_clicks_on_Employee_id_and() {
 		List<WebElement> listRows = viewEmp.resultTable;
-	
+
 		boolean flag = false;
 		while (!flag) {
 			for (int i = 0; i < listRows.size(); i++) {
 				if (listRows.get(i).getText().contains(AddEmployeeSteps.expextedID)) {
-					driver.findElement(By.xpath("//table[@id='resultTable']//tbody/tr[" + (i+1) + "]/td[2]")).click();
+					driver.findElement(By.xpath("//table[@id='resultTable']//tbody/tr[" + (i + 1) + "]/td[2]")).click();
 					flag = true;
 					break;
 				}
@@ -39,7 +44,7 @@ public class ModifyEmpDetailsSteps extends CommonMethods {
 	@When("user lands on Personal Details page")
 	public void user_lands_on_Personal_Details_page() {
 		Assert.assertEquals("User is NOT on the Personal Details Page", "Personal Details",
-				
+
 				waitForVisibility(pDetails.headerPersonalDetails).getText());
 	}
 
@@ -47,10 +52,15 @@ public class ModifyEmpDetailsSteps extends CommonMethods {
 	public void user_clicks_on_button_edit() {
 		click(pDetails.btnEdit);
 	}
-
-	@When("user enters Employee Details data from dataTable")
-	public void user_enters_Employee_Details_data_from_dataTable(DataTable dataTable) {
+	
+	@When("SERVICE STEP getting data from dataTable")
+	public void service_STEP_getting_data_from_dataTable(DataTable dataTable) {
 		listData = dataTable.asList();
+	}
+
+	@When("user enters Employee Details data")
+	public void user_enters_Employee_Details_data() {
+
 		Iterator<String> it = listData.iterator();
 		while (it.hasNext()) {
 			sendText(pDetails.licenseNO, it.next());
@@ -59,7 +69,6 @@ public class ModifyEmpDetailsSteps extends CommonMethods {
 			for (String a : arr) {
 				String noLeadingZero = a.replaceAll("^0+(?!$)", "");
 				data.add(noLeadingZero);
-				System.out.println(noLeadingZero);
 			}
 			Iterator<String> iter = data.iterator();
 			while (iter.hasNext()) {
@@ -69,7 +78,12 @@ public class ModifyEmpDetailsSteps extends CommonMethods {
 			}
 			sendText(pDetails.ssnNumber, it.next());
 			sendText(pDetails.sinNumber, it.next());
-			clickRadioOrCheckBox(pDetails.sexRadio, it.next());
+			
+			double d = Double.parseDouble(it.next());
+			String removeDecimal = String.format("%.0f",d);
+			clickRadioOrCheckBox(pDetails.sexRadio,removeDecimal);
+			
+			
 			selectDDValue(pDetails.maritalDD, it.next());
 			selectDDValue(pDetails.nationalityDD, it.next());
 			String[] arr2 = it.next().split("-");
@@ -99,9 +113,9 @@ public class ModifyEmpDetailsSteps extends CommonMethods {
 		click(pDetails.btnSave);
 	}
 
-	@Then("checks all data modified")
-	public void checks_all_data_modified() {
-		List<WebElement> actualListWeb =  driver.findElements(By.cssSelector(".editable"));
+	@Then("checks all data modified {string}")
+	public void checks_all_data_modified(String nationality) {
+		List<WebElement> actualListWeb = driver.findElements(By.cssSelector(".editable"));
 		actualListWeb.remove(0);
 		actualListWeb.remove(0);
 		actualListWeb.remove(0);
@@ -111,25 +125,48 @@ public class ModifyEmpDetailsSteps extends CommonMethods {
 		actualListWeb.remove(4);
 		actualListWeb.remove(5);
 		actualListWeb.remove(7);
-		
-		List<String>actualList = new ArrayList<>();
-		for(WebElement el: actualListWeb) {
+
+		List<String> actualList = new ArrayList<>();
+		for (WebElement el : actualListWeb) {
 			actualList.add(el.getAttribute("value"));
 		}
-		List<String>expectedList = new ArrayList<>(listData);
+		List<String> expectedList = new ArrayList<>(listData);
 		expectedList.remove(4);
 		expectedList.remove(5);
 		Assert.assertEquals("Employee Details are NOT Madified", expectedList, actualList);
-		
-		Select select = new Select(driver.findElement(By.id("personal_cmbNation")));
-		
-		
+
+		// checking nationality is selected
+		Select select = new Select(pDetails.nationalityDD);
+		List<WebElement> opt = select.getOptions();
+		for (WebElement o : opt) {
+			if (o.getText().equals(nationality)) {
+				Assert.assertTrue("Nationality is NOT Selected", o.isSelected());
+			}
+		}
+		// checking is radio button properly selected
+		List<WebElement> radio = pDetails.sexRadio;
+		for (WebElement r : radio) {
+			if (r.getAttribute("value").equals("1")) {
+				Assert.assertTrue("Gender radio buttun is NOT Selected", r.isSelected());
+			}
+		}
+
+		// checking is Smoker check Box selected
+		Assert.assertTrue("Smoker check box is NOT Selected", pDetails.smokerCheckBox.isSelected());
+
 	}
 
-	@When("user enters Employee Details data from {string}")
-	public void user_enters_Employee_Details_data_from(String string) {
-		// Write code here that turns the phrase above into concrete actions
-		throw new io.cucumber.java.PendingException();
+	@When("SERVICE STEP geting data from excel sheet {string}")
+	public void service_STEP_geting_data_from_excel_sheet(String sheetName) {
+		List<Map<String, String>> empDetails = ExcelUtility.excelIntoListOfMaps(Constants.TESTDATA_FILEPATH, sheetName);
+		//List<String>listData = new ArrayList<>();
+		for(Map<String, String> data: empDetails){
+			Collection<String> values = data.values();
+			for(String value: values) {
+				listData.add(value);
+			}
+			
+		}
 	}
 
 }

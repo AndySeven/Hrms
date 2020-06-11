@@ -4,6 +4,7 @@ com/hrms/utils/Constants.class
 com/hrms/pages/PersonalDetailsPageElements.class
 com/hrms/steps/Hooks.class
 com/hrms/testbase/PageInitializer.class
+com/hrms/runners/TestRunner.class
 com/hrms/steps/DashboardSteps.class
 com/hrms/pages/ViewEmployeePageElements.class
 com/hrms/utils/ConfigsReader.class

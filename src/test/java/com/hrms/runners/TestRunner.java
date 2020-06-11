@@ -13,7 +13,12 @@ import io.cucumber.junit.CucumberOptions;
 		monochrome = true,				  			// false - run as usual
 		strict = false								// will fail your Scenario if there is one unimplemented step
 		//,tags= "@HWAddEmp"
-		,tags="@Go"
+		,tags="@Progress"
+		,plugin= {
+						"pretty",  // prints Gherkin steps in console
+						"html:target/cucumber-default-report",  // creates basic html report in specified location
+						"json:target/cucumber.json"
+						}
 		)
 public class TestRunner {
 	

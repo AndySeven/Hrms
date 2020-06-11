@@ -16,7 +16,7 @@ import io.cucumber.junit.CucumberOptions;
 		//, tags = "@AddEmpFeature"
 		//, tags = "@Jackson"
 		//, tags = "@ScenarioOutline"
-		//, tags = {"~@NoExecute", "@Smoke"}
+		, tags = "@Smoke"
 		,plugin= {
 				"pretty",  // prints Gherkin steps in console
 				"html:target/cucumber-default-report",  // creates basic html report in specified location
