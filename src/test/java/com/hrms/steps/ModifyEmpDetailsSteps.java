@@ -122,9 +122,6 @@ public class ModifyEmpDetailsSteps extends CommonMethods {
 		Assert.assertEquals("Employee Details are NOT Madified", expectedList, actualList);
 		
 		Select select = new Select(driver.findElement(By.id("personal_cmbNation")));
-		System.out.println("-------------------------------------");
-		System.out.println(select.getAllSelectedOptions());
-		System.out.println("-------------------------------------");
 		
 		
 	}
