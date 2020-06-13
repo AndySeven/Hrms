@@ -21,6 +21,7 @@ import io.cucumber.junit.CucumberOptions;
 				"pretty",  // prints Gherkin steps in console
 				"html:target/cucumber-default-report",  // creates basic html report in specified location
 				"json:target/cucumber.json"
+				,"rerun:target/faild.txt"
 				}
 
 )

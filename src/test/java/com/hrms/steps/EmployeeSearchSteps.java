@@ -37,9 +37,9 @@ public class EmployeeSearchSteps extends CommonMethods {
 
 	@Then("user see employee information is displayed {string}")
 	public void user_see_employee_information_is_displayed(String empID) {
-		wait(1);
+		wait(2);
 		assertTrue("emp info is NOT displayed", presenseTextInTable(empID, viewEmp.resultTable));
-		wait(1);
+		wait(2);
 	}
 
 	@When("user enters valid employee name {string}")

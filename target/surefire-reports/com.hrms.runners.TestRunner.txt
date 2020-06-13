@@ -1,4 +1,7 @@
 -------------------------------------------------------------------------------
 Test set: com.hrms.runners.TestRunner
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 60.974 s - in com.hrms.runners.TestRunner
+Tests run: 7, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 60.126 s <<< FAILURE! - in com.hrms.runners.TestRunner
+Employee Search.Search employee by name  Time elapsed: 15.251 s  <<< FAILURE!
+java.lang.AssertionError: emp info is NOT displayed
+
