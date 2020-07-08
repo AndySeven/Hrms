@@ -59,6 +59,23 @@
 			<version>3.8.1</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.20</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/com.github.temyers/cucumber-jvm-parallel-plugin -->
+		<dependency>
+			<groupId>com.github.temyers</groupId>
+			<artifactId>cucumber-jvm-parallel-plugin</artifactId>
+			<version>5.0.0</version>
+		</dependency>
+
+
+
 
 		<!-- Decide which to use -->
 		<!-- https://mvnrepository.com/artifact/com.vimalselvam/cucumber-extentsreport -->
@@ -76,13 +93,18 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M4</version>
 				<configuration>
-					<includes>
-						<!-- <include>**/*SmokeRunner.java</include> -->
-						<include>**/*TestRunner.java</include>
-						<!-- <include>**/*RegressionRunner.java</include> -->
-						<!-- <include>**/*AnotherTestRunner.java</include> -->
-					</includes>
-					<!-- for cucumber reports i line and code after plugin-->
+					<!-- <parallel>methods</parallel>
+					<threadCount>4</threadCount>
+					<useUnlimitedThreads>4</useUnlimitedThreads>
+					<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine> -->
+
+
+					<includes> 
+					<!-- <include>**/*SmokeRunner.java</include>  -->
+					<include>**/*TestRunner.java</include> 
+						<!-- <include>**/*RegressionRunner.java</include> <include>**/*AnotherTestRunner.java</include>  -->
+						</includes>
+					<!-- for cucumber reports i line and code after plugin -->
 					<testFailureIgnore>true</testFailureIgnore>
 				</configuration>
 			</plugin>
@@ -111,7 +133,7 @@
 								<!-- supports wildcard or name pattern -->
 								<param>**/*.json</param>
 							</jsonFiles>
-						
+
 						</configuration>
 					</execution>
 				</executions>

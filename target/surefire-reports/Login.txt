@@ -1,0 +1,72 @@
+-------------------------------------------------------------------------------
+Test set: Login
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 1, Errors: 8, Skipped: 0, Time elapsed: 44.157 s <<< FAILURE! - in Login
+Login.EMPTY_NAME  Time elapsed: 0.118 s  <<< ERROR!
+java.lang.NullPointerException
+
+Login.EMPTY_NAME  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
+
+Login.EMPTY_NAME  Time elapsed: 9.871 s  <<< ERROR!
+org.openqa.selenium.NoSuchSessionException: 
+invalid session id
+Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
+System info: host: 'Andreis-MBP.lan1', ip: '2604:2000:1280:4f9b:0:0:0:8a8%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.15.5', java.version: '1.8.0_251'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.116, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/jw/sqbsjg513gs...}, goog:chromeOptions: {debuggerAddress: localhost:54747}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 8899023dc4ee22fb20b40b021d8b30cb
+
+Login.EMPTY_NAME  Time elapsed: 0 s  <<< ERROR!
+org.openqa.selenium.WebDriverException: 
+java.net.ConnectException: Failed to connect to localhost/0:0:0:0:0:0:0:1:4382
+Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
+System info: host: 'Andreis-MBP.lan1', ip: '2604:2000:1280:4f9b:0:0:0:8a8%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.15.5', java.version: '1.8.0_251'
+Driver info: driver.version: RemoteWebDriver
+Caused by: java.net.ConnectException: Failed to connect to localhost/0:0:0:0:0:0:0:1:4382
+Caused by: java.net.ConnectException: Connection refused (Connection refused)
+
+Login.Error message validation while invalid login  Time elapsed: 9.366 s  <<< ERROR!
+org.openqa.selenium.StaleElementReferenceException: 
+stale element reference: element is not attached to the page document
+  (Session info: chrome=83.0.4103.116)
+For documentation on this error, please visit: https://www.seleniumhq.org/exceptions/stale_element_reference.html
+Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
+System info: host: 'Andreis-MBP.lan1', ip: '2604:2000:1280:4f9b:0:0:0:8a8%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.15.5', java.version: '1.8.0_251'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.116, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/jw/sqbsjg513gs...}, goog:chromeOptions: {debuggerAddress: localhost:54834}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 79458bf4936c4fa6c80c7722d4281d94
+
+Login.Error message validation while invalid login  Time elapsed: 8.162 s  <<< ERROR!
+org.openqa.selenium.NoSuchSessionException: 
+invalid session id
+Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
+System info: host: 'Andreis-MBP.lan1', ip: '2604:2000:1280:4f9b:0:0:0:8a8%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.15.5', java.version: '1.8.0_251'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.116, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/jw/sqbsjg513gs...}, goog:chromeOptions: {debuggerAddress: localhost:54911}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: ed158c688818dd73b082877033dfc0d0
+
+Login.Error message validation while invalid login  Time elapsed: 7.17 s  <<< ERROR!
+org.openqa.selenium.NoSuchElementException: 
+no such element: Unable to locate element: {"method":"css selector","selector":"#spanMessage"}
+  (Session info: chrome=83.0.4103.116)
+For documentation on this error, please visit: https://www.seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
+System info: host: 'Andreis-MBP.lan1', ip: '2604:2000:1280:4f9b:0:0:0:8a8%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.15.5', java.version: '1.8.0_251'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.116, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/jw/sqbsjg513gs...}, goog:chromeOptions: {debuggerAddress: localhost:54967}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: 284ac43f5055e1ec6b9b85b43772e073
+*** Element info: {Using=id, value=spanMessage}
+
+Login.Error message validation while invalid login  Time elapsed: 4.665 s  <<< FAILURE!
+org.junit.ComparisonFailure: Message is Not Matching expected:<[Password cannot be empty]> but was:<[Invalid credentials]>
+
+Login.Error message validation while invalid login  Time elapsed: 4.802 s  <<< ERROR!
+org.openqa.selenium.NoSuchSessionException: 
+invalid session id
+Build info: version: '3.141.59', revision: 'e82be7d358', time: '2018-11-14T08:17:03'
+System info: host: 'Andreis-MBP.lan1', ip: '2604:2000:1280:4f9b:0:0:0:8a8%en0', os.name: 'Mac OS X', os.arch: 'x86_64', os.version: '10.15.5', java.version: '1.8.0_251'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 83.0.4103.116, chrome: {chromedriverVersion: 83.0.4103.39 (ccbf011cb2d2b..., userDataDir: /var/folders/jw/sqbsjg513gs...}, goog:chromeOptions: {debuggerAddress: localhost:55059}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: MAC, platformName: MAC, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:virtualAuthenticators: true}
+Session ID: b006e6fe3b27f3b1c2f7fe5ac4fe571a
+
