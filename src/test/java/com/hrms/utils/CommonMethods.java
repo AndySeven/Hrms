@@ -3,12 +3,16 @@ package com.hrms.utils;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.hpsf.Array;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -595,6 +599,19 @@ public class CommonMethods extends PageInitializer {
 
 		}
 		return false;
+	}
+	
+	
+	public static List<Map<String, String>> getlistOfMapsFromTableOneColumn(String nameColumn, List<WebElement> column) {
+		List<Map<String, String>> list = new ArrayList<>();
+		Map<String, String> map = null;
+		for(WebElement r :column) {
+			map = new LinkedHashMap<>();
+			String textOfCell = r.getText();
+			map.put(nameColumn, textOfCell);
+			list.add(map);
+		}
+		return list;
 	}
 
 //	public static void switchToChildWindow() {

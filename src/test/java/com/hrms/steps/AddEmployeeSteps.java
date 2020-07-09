@@ -20,7 +20,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class AddEmployeeSteps extends CommonMethods {
-	static public String expextedID;
+	public static String expextedID;
 	public String expNameCombination;
 	public List<String> act = new ArrayList<>();
 	public List<String> exp = new ArrayList<>();
