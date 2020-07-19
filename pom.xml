@@ -75,6 +75,15 @@
 		</dependency>
 
 
+		<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>4.3.1</version>
+			<scope>test</scope>
+		</dependency>
+
+
 
 
 		<!-- Decide which to use -->
@@ -93,17 +102,15 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M4</version>
 				<configuration>
-					<!-- <parallel>methods</parallel>
-					<threadCount>4</threadCount>
-					<useUnlimitedThreads>4</useUnlimitedThreads>
-					<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine> -->
+					<!-- <parallel>methods</parallel> <threadCount>4</threadCount> <useUnlimitedThreads>4</useUnlimitedThreads> 
+						<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine> -->
 
 
-					<includes> 
-					<!-- <include>**/*SmokeRunner.java</include>  -->
-					<include>**/*TestRunner.java</include> 
-						<!-- <include>**/*RegressionRunner.java</include> <include>**/*AnotherTestRunner.java</include>  -->
-						</includes>
+					<includes>
+						<!-- <include>**/*SmokeRunner.java</include> -->
+						<include>**/*TestRunner.java</include>
+						<!-- <include>**/*RegressionRunner.java</include> <include>**/*AnotherTestRunner.java</include> -->
+					</includes>
 					<!-- for cucumber reports i line and code after plugin -->
 					<testFailureIgnore>true</testFailureIgnore>
 				</configuration>

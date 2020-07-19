@@ -78,9 +78,10 @@ public class EmployeeSearchSteps extends CommonMethods {
 	
 	}
 	
-	@When("user gets data from the table")
-	public void user_gets_lastname_from_the_table() {
-		uiLastNames = viewEmp.getLastNameFromTable();
+	
+	@When("user gets {string} from the table")
+	public void user_gets_from_the_table(String columnName) {
+		uiLastNames = viewEmp.getLastNameFromTable(columnName);
 	}
 	
 	@Then("user validates data against db")

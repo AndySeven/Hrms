@@ -46,7 +46,6 @@ public class JDBCdemo2 {
 		Statement st = con.createStatement();
 		// using statement obj executing Query
 		ResultSet rs = st.executeQuery("select employee_id, emp_firstname, emp_lastname from hs_hr_employees;");
-
 		ResultSetMetaData rsmd = rs.getMetaData();
 		// Getting info about result table
 //		String key1 = rsmd.getColumnName(4);

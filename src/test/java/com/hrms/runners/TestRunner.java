@@ -12,7 +12,7 @@ import io.cucumber.junit.CucumberOptions;
 		dryRun = false,    							// true - scan that all Gherkin steps has implementation
 		monochrome = true,				  			// false - run as usual
 		strict = false								// will fail your Scenario if there is one unimplemented step
-		//,tags= "@HWAddEmp"
+	   ,tags= "@ValidationDB"
 		//,tags="@Progress"
 		//,tags="@Regression"
 		,plugin= {

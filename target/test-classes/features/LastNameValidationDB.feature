@@ -1,3 +1,4 @@
+@ValidationDB
 Feature: lastname validation against DB
 
   Background: 
@@ -13,10 +14,10 @@ Feature: lastname validation against DB
     
     When user navigate to employee list page
     And user enters valid employee id
-    And click on search button
+    And click on search button	
     Then verify table is displayed
     
-    When user gets data from the table
+    When user gets "emp_lastname" from the table
     And user gets data from db "select emp_lastname from hs_hr_employees where employee_id = "
     Then user validates data against db
     

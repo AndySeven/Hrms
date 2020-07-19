@@ -65,8 +65,8 @@ public class ViewEmployeePageElements extends CommonMethods{
 		return listMaps;
 	}
 	
-	public List<Map<String, String>> getLastNameFromTable() {
-		return getlistOfMapsFromTableOneColumn("emp_lastname", lastNamesTable);
+	public List<Map<String, String>> getLastNameFromTable(String columnName) {
+		return getlistOfMapsFromTableOneColumn(columnName, lastNamesTable);
 	}
 	
 }
