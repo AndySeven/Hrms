@@ -1,7 +1,7 @@
 #Author: your.email@your.domain.com
 Feature: Login
 
-  @Smoke
+  
   Scenario Outline: 
     When user enter valid "<Username>" and "<Password>" and clicks on login button
     Then "<FirstName>" is successfully logged in
@@ -11,7 +11,7 @@ Feature: Login
       | Admin       | Hum@nhrm123      | Admin     |
       | Alfredo3001 | Gladiator7820$90 | Alfredo   |
 
-  @Regression
+  @Smoke
   Scenario Outline: Error message validation while invalid login
     #invalid credentials
     When user enter valid "<Username>" and "<Password>" and clicks on login button

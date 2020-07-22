@@ -4,7 +4,7 @@ Feature: Add employee
   Background: 
     Given user logged in into HRMS
     And user navigates to Add Employee page
-	
+	@Smoke
   Scenario: Add new Employee
     When user enters First Name "Alfredo" and Last Name "Pitbullterierro"
     And user sees ID
@@ -17,7 +17,7 @@ Feature: Add employee
     And user clicks on save button
     Then employee is added successfully no ID
 
-  @Smoke
+  
   Scenario: AddEmployee and create Login Credentials
     When user enters First Name "Alfredo" and Last Name "Pitbullterierro"
     And user sees ID

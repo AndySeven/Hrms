@@ -22,6 +22,7 @@ public class BaseClass {
 		ConfigsReader.readConfigs(Constants.PROPERTIES_FILE_PATH);
 		System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, "true");
 		String headless = ConfigsReader.getValueOfProperty("headless");
+		System.out.println(headless+" first check");
 		
 		
 		switch (ConfigsReader.getValueOfProperty("browser").toLowerCase()) {
@@ -33,6 +34,7 @@ public class BaseClass {
 			if(headless.equalsIgnoreCase("true")) {
 			// headless browser for jenkins
 				cOption.setHeadless(true);
+				System.out.println(headless+" second check check");
 				driver = new ChromeDriver();
 			}else {
 				driver = new ChromeDriver();
