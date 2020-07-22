@@ -3,6 +3,7 @@ package com.hrms.testbase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.hrms.utils.ConfigsReader;
@@ -20,11 +21,23 @@ public class BaseClass {
 	public static WebDriver setUp() {
 		ConfigsReader.readConfigs(Constants.PROPERTIES_FILE_PATH);
 		System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, "true");
+		String headless = ConfigsReader.getValueOfProperty("headless");
+		
 		
 		switch (ConfigsReader.getValueOfProperty("browser").toLowerCase()) {
+	
 		case "chrome":
 			WebDriverManager.chromedriver().setup();
-			driver = new ChromeDriver();
+			
+			ChromeOptions cOption = new ChromeOptions();
+			if(headless.equalsIgnoreCase("true")) {
+			// headless browser for jenkins
+				cOption.setHeadless(true);
+				driver = new ChromeDriver();
+			}else {
+				driver = new ChromeDriver();
+			}
+			
 			break;
 		case "firefox":
 			WebDriverManager.firefoxdriver().setup();

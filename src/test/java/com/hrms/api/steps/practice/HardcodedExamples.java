@@ -11,6 +11,10 @@ import io.restassured.specification.RequestSpecification;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
+import java.nio.charset.Charset;
+import java.util.Map;
+import java.util.Random;
+
 /*
  * import JUnit packages
  */
@@ -39,6 +43,11 @@ import org.junit.*;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING) 
 public class HardcodedExamples {
 
+	static String userName;
+	static String password = "Qwerty@123";
+	static String email;
+	
+	
 	static String baseURI = RestAssured.baseURI = "http://18.232.148.34/syntaxapi/api";
 	static String token = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9."
 			+ "eyJpYXQiOjE1OTUxNjk2MjEsImlzcyI6ImxvY2FsaG9zdCIsImV4cCI6MTU5NTIxMjgyMSwidXNlcklkIjoiNjY1In0.1KH5Uupr-JWWndslLCz9wKsw12_jr5AX7R3SkNMMw50";
@@ -70,9 +79,6 @@ public class HardcodedExamples {
 	static String jobTitlePath = "employee[0].emp_job_title";
 	static String statusPath = "employee[0].emp_status";
 	
-	
-	
-	
 	static String contType = "Content-Type";
 	static String appJSON = "application/json";
 	static String auth = "Authorization";
@@ -81,6 +87,16 @@ public class HardcodedExamples {
 	static String getAllEmployeesEndpoint = "/getAllEmployees.php";
 	static String getOneEmployee = "/getOneEmployee.php";
 	static String postCreateEmployee = "/createEmployee.php";
+	static String postCreateUser = "/createUser.php";
+	static String postGenerateToken = "/generateToken.php";
+	static String patchPartiallyUpdateEmployee = "/updatePartialEmplyeesDetails.php";
+	static String getJobTitlesEndpoint = "/jobTitle.php";
+	static String getStatusesEndpoint = "/employeeStatus.php";
+	static String deleteEmployeeEndpoint = "/deleteEmployee.php";
+	
+	
+	static Map<Object, Object> updatedBodyMap;
+	
 	
 	public void sampleTestNotes() {
 		/*
@@ -120,24 +136,63 @@ public class HardcodedExamples {
 		getOneEmployeeResponse.then().assertThat().statusCode(200);
 	}
 	
+	
+	public void a1POSTcreateUser() {
+		System.out.println("------------------------------------------POST Create User-------------------------------------------");
+		    userName = HardcodedConstants.getAlphaNumericString(8);
+		    email = userName+"@gmail.com";
+		    
+		    System.out.println(userName+" "+password+" "+email);
+		 
+		RequestSpecification createUserRequest = given()
+				.header(contType, appJSON)
+				.body(HardcodedConstants.createUserBody(userName, password, email));
+	
+		Response createUserResponse = createUserRequest
+				.when()
+				.post(postCreateUser);
+
+		createUserResponse.prettyPrint();
+	}
+	
+	public void a2POSTgenerateToken() {
+		System.out.println("------------------------------------------POST Generate Token-------------------------------------------");		
+//		if(email == null) {
+//		    userName = HardcodedConstants.getAlphaNumericString(8);
+//		    email = userName+"@gmail.com";
+//		}
+		RequestSpecification generateTokenRequest = given()
+				.header(contType,appJSON)
+				.body(HardcodedConstants
+				.generateTokenBody(email, password));
+		
+		System.out.println(email+" "+password);
+		
+		Response generateTokenResponse = generateTokenRequest.when().post(postGenerateToken);
+		
+		String response = generateTokenResponse.prettyPrint();
+		
+		token = generateTokenResponse.body().jsonPath().getString("token");
+		
+		JsonPath jp = new JsonPath(response);
+		//token = jp.getString("token");
+		
+	}
+	
+	
+	
+	
 	@Test
 	public void aPOSTcreateEmployee() {
 		System.out.println("------------------------------------------POST Create Employee-------------------------------------------");
 		/*
 		 * Preparing request for /createEmployee.php
 		 */
+		System.out.println(token);
 		RequestSpecification createEmployeeRequest = given()
 				.header("Content-Type", "application/json")
 				.header("Authorization", token)
-				.body("{\n" + 
-				"  \"emp_firstname\": \"Henry\",\n" + 
-				"  \"emp_lastname\": \"Hippo\",\n" + 
-				"  \"emp_middle_name\": \"Orange\",\n" + 
-				"  \"emp_gender\": \"M\",\n" + 
-				"  \"emp_birthday\": \"2000-03-28\",\n" + 
-				"  \"emp_status\": \"Worker\",\n" + 
-				"  \"emp_job_title\": \"Developer\"\n" + 
-				"}")
+				.body(HardcodedConstants.createdEmpBody(empID))
 				.log().all();
 		/*
 		 * Storing response into ref variable createEmployeeResponse
@@ -150,6 +205,7 @@ public class HardcodedExamples {
 		 * Printing response using prettyPrint() method
 		 */
 		createEmployeeResponse.prettyPrint();
+		
 		createEmployeeResponse
 		.then()
 		.assertThat()
@@ -185,7 +241,7 @@ public class HardcodedExamples {
 		createEmployeeResponse
 		.then()
 		.assertThat()
-		.body("Employee[0].emp_firstname", equalTo("Henry"));
+		.body("Employee[0].emp_firstname", equalTo("Jack"));
 		
 		/*
 		 * Don't use assert to check header of response
@@ -229,6 +285,9 @@ public class HardcodedExamples {
 		
 		String response = getCreatedEmployeeResponse.prettyPrint();
 		
+		
+		
+		// --------------------------------Validation and Asserts---------------------------------
 		/*
 		 * Getting actual employee id from response body
 		 */
@@ -237,9 +296,12 @@ public class HardcodedExamples {
 				.jsonPath()
 				.getString("employee[0].employee_id");
 		
+		
 		boolean verifyEmployeeIdMatch = empID.equalsIgnoreCase(empIDActual);
 		System.out.println("Employee ID is matced --> "+verifyEmployeeIdMatch);
 		Assert.assertTrue(verifyEmployeeIdMatch);
+		
+		
 		
 		getCreatedEmployeeResponse.then().assertThat().statusCode(200);
 		
@@ -313,6 +375,7 @@ public class HardcodedExamples {
 		String response = getAllEmployeesResponse.body().asString();
 		
 		
+		// --------------------------------Validation and Asserts---------------------------------
 		/*
 		 * Will pas but incoreect
 		 */
@@ -343,6 +406,8 @@ public class HardcodedExamples {
 //				break;
 //			}
 //		}
+		
+		
 		getAllEmployeesResponse.then().assertThat().statusCode(200);
 	}
 	
@@ -357,7 +422,7 @@ public class HardcodedExamples {
 		RequestSpecification updateEmployeeRequest = given()
 				.header(contType,appJSON)
 				.header(auth,token)
-				.body(HardcodedConstants.updateCreatedEmpBody())
+				.body(HardcodedConstants.updateCreatedEmpBody(empID))
 				.log().all();
 		/*
 		 * Implementing request, storing into ref var Response type
@@ -371,23 +436,31 @@ public class HardcodedExamples {
 		 */
 		String response = updateEmployeeResponse.prettyPrint();
 				
+		
+		// --------------------------------Validation and Asserts---------------------------------
 		/*
 		 * Validating the status code is 201		
 		 */
 		updateEmployeeResponse.then().assertThat().statusCode(201);
 		
+		JsonPath jp = new JsonPath(response);
+		String message = jp.getString("Message");
+		Assert.assertTrue(message.contentEquals("Entry updated"));
 		
 		/*
 		 * Storing updated values (employee details) into variables
 		 */
-		idUpdated =  updateEmployeeResponse.jsonPath().getString(idPath);
-		firstNameUpdated =  updateEmployeeResponse.jsonPath().getString(firstNamePath);
-		middleNameUpdated =  updateEmployeeResponse.jsonPath().getString(middleNamePath);
-		lastNameUpdated =  updateEmployeeResponse.jsonPath().getString(lastNamePath);
-		birthdayUpdated =  updateEmployeeResponse.jsonPath().getString(birtdayPath);
-		genderUpdated =  updateEmployeeResponse.jsonPath().getString(genderPath);
-		jobTitleUpdated =  updateEmployeeResponse.jsonPath().getString(jobTitlePath);
-		statusUpdated =  updateEmployeeResponse.jsonPath().getString(statusPath);
+//		idUpdated =  updateEmployeeResponse.jsonPath().getString(idPath);
+//		firstNameUpdated =  updateEmployeeResponse.jsonPath().getString(firstNamePath);
+//		middleNameUpdated =  updateEmployeeResponse.jsonPath().getString(middleNamePath);
+//		lastNameUpdated =  updateEmployeeResponse.jsonPath().getString(lastNamePath);
+//		birthdayUpdated =  updateEmployeeResponse.jsonPath().getString(birtdayPath);
+//		genderUpdated =  updateEmployeeResponse.jsonPath().getString(genderPath);
+//		jobTitleUpdated =  updateEmployeeResponse.jsonPath().getString(jobTitlePath);
+//		statusUpdated =  updateEmployeeResponse.jsonPath().getString(statusPath);
+		
+		updatedBodyMap = jp.getMap("employee[0]");
+		
 		
 		
 		
@@ -410,11 +483,133 @@ public class HardcodedExamples {
 		 */
 		Response getUpdatedEmployeeResponse = getUpdatedEmployeeRequest.when().get(getOneEmployee);
 		
-		getUpdatedEmployeeResponse.prettyPrint();
+		/*
+		 * printing response in console and storing in string
+		 */
+		String response = getUpdatedEmployeeResponse.prettyPrint();
+		
+		
+		// --------------------------------Validation and Asserts---------------------------------
 		
 		getUpdatedEmployeeResponse.then().assertThat().statusCode(200);
 		
+		/*
+		 * Verifying the the body contains expected updated employee details 
+		 */
+		JsonPath jp = new JsonPath(response);
+		Map<String, String> updatedBodyMapActual = jp.getMap("employee[0]"); 
+		Assert.assertEquals(updatedBodyMap, updatedBodyMapActual);
+	}
+	
+	@Test
+	public void fPATCHpartiallyUpdateEmployee() {
+		System.out.println("------------------------------------------PATCH Partially Update Employee-------------------------------------------");
+		/*
+		 * Preparing /updatePartialEmplyeesDetails.php request
+		 */
 		
+		RequestSpecification partiallyUpdateEmployeeRequest = given()
+				.header(contType, appJSON)
+				.header(auth, token)
+				.body(HardcodedConstants.partuallyUpdateEmpBody(empID));
 		
+		Response partiallyUpdateEmployeeResponse = partiallyUpdateEmployeeRequest.when().patch(patchPartiallyUpdateEmployee);
+		String response = partiallyUpdateEmployeeResponse.prettyPrint();
+		
+		partiallyUpdateEmployeeResponse.then().assertThat().statusCode(201);
+		partiallyUpdateEmployeeResponse.then().assertThat().header(contType, appJSON);
+		partiallyUpdateEmployeeResponse.then().assertThat().header("Access-Control-Allow-Methods", "PATCH");
+		partiallyUpdateEmployeeResponse.then().assertThat().header("Server", "Apache/2.4.39 (Win64) PHP/7.2.18");
+		partiallyUpdateEmployeeResponse.then().assertThat().header("X-Powered-By", "PHP/7.2.18");
+		
+		partiallyUpdateEmployeeResponse.then().assertThat().body(idPath, equalTo(empID));
+		partiallyUpdateEmployeeResponse.then().assertThat().body(firstNamePath, equalTo("Bilbo"));
+		partiallyUpdateEmployeeResponse.then().assertThat().body(jobTitlePath, equalTo("Developer"));
+		
+		partiallyUpdateEmployeeResponse.then().assertThat().body("Message", equalTo("Entry updated"));
+		
+		/*
+		 * get all employee details and storing in map
+		 */
+		updatedBodyMap = new JsonPath(response).getMap("employee[0]");
+		
+	}
+	
+	@Test
+	public void gGETpartiallyUpdatedEmployee() {
+		System.out.println("------------------------------------------GET Partially Updated Employee-------------------------------------------");
+		/*
+		 * Preparing /getOneEmployee.php request
+		 */
+		
+		RequestSpecification getPartiallyUpdatedEmployeeRequest = given()
+				.header(contType,appJSON)
+				.header(auth,token)
+				.queryParam("employee_id", empID);
+		
+		Response getPartiallyUpdatedEmployeeResponse = getPartiallyUpdatedEmployeeRequest
+				.when()
+				.get(getOneEmployee);
+		
+		String response = getPartiallyUpdatedEmployeeResponse.prettyPrint();
+		
+		//String response = getPartiallyUpdatedEmployeeResponse.body().asString();
+		//String response2 = getPartiallyUpdatedEmployeeResponse.toString();
+		
+		getPartiallyUpdatedEmployeeResponse.then().assertThat().statusCode(200);
+		
+		JsonPath jp = new JsonPath(response);
+		Map<String, String> partiallyUpdatedMapActual = jp.getMap("employee[0]");
+		
+		Assert.assertEquals(updatedBodyMap, partiallyUpdatedMapActual);
+		
+	}
+	@Test
+	public void hDELETEemployee() {
+		System.out.println("------------------------------------------DELETE Employee-------------------------------------------");
+		RequestSpecification deleteEmployeeRequest = given()
+				.header(contType,appJSON)
+				.header(auth,token)
+				.queryParam("employee_id", empID);
+		Response deleteEmployeeResponse = deleteEmployeeRequest
+				.when()
+				.delete(deleteEmployeeEndpoint);
+		String response = deleteEmployeeResponse.prettyPrint();
+
+		JsonPath jp = new JsonPath(response);
+	
+		deleteEmployeeResponse.then().assertThat().statusCode(201);
+		deleteEmployeeResponse.then().assertThat().body("message", equalTo("Entry deleted"));
+		// OR
+		Assert.assertEquals("Entri is not deleted", "Entry deleted", jp.getString("message"));
+		
+	}
+	
+	@Test
+	public void iGETjobTitles() {
+		System.out.println("------------------------------------------GET Job Titles-------------------------------------------");
+		RequestSpecification getJobTitlesRequest = given()
+				.header(contType,appJSON)
+				.header(auth,token);
+		Response getJobTitlesResponse = getJobTitlesRequest
+				.when()
+				.get(getJobTitlesEndpoint);
+		String response = getJobTitlesResponse.prettyPrint();
+		getJobTitlesResponse.then().assertThat().statusCode(200);
+		
+	}
+	
+	@Test
+	public void jGETstatuses() {
+		System.out.println("------------------------------------------GET Statuses-------------------------------------------");
+		RequestSpecification getSatusesRequest = given()
+				.header(contType,appJSON)
+				.header(auth,token);
+		
+		Response getStatusesResponse = getSatusesRequest
+				.when()
+				.get(getStatusesEndpoint);
+		String response = getStatusesResponse.prettyPrint();
+		getStatusesResponse.then().assertThat().statusCode(200);
 	}
 }
